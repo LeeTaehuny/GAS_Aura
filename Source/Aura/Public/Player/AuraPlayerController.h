@@ -19,8 +19,15 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void SetupInputComponent() override;
 
 private:
 	UPROPERTY(Editanywhere, Category = "Input")
 	TObjectPtr<class UInputMappingContext> AuraContext;
+
+	UPROPERTY(Editanywhere, Category = "Input")
+	TObjectPtr<class UInputAction> MoveAction;
+
+	// struct를 붙여 구조체 또한 전방 선언이 가능합니다.
+	void Move(const struct FInputActionValue& InputActionValue);
 };
