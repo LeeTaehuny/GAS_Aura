@@ -4,15 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "AbilitySystemInterface.h"
 #include "AuraCharacterBase.generated.h"
 
 UCLASS()
-class AURA_API AAuraCharacterBase : public ACharacter
+class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AAuraCharacterBase();
+
+public:
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	FORCEINLINE class UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -25,4 +30,10 @@ protected:
 	// 현재 언리얼 엔진에서는 멤버 변수로 TObjectPtr을 사용하는 방향으로 표준이 이동하고 있습니다.
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<class USkeletalMeshComponent> Weapon;
+
+	UPROPERTY()
+	TObjectPtr<class UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<class UAttributeSet> AttributeSet;
 };
