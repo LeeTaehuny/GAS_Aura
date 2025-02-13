@@ -17,5 +17,12 @@ class AURA_API AAuraCharacter : public AAuraCharacterBase
 public:
 	AAuraCharacter();
 
+	virtual void PossessedBy(AController* NewController) override;
 
+	// Pawn에 선언되어 있는 함수(PlayerState 복제)
+	virtual void OnRep_PlayerState() override;
+
+private:
+	// AbilitySystemComponent의 Owner, Avatar 액터를 초기화하기 위한 함수
+	void InitAbilityActorInfo();
 };

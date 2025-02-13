@@ -17,9 +17,9 @@ AAuraEnemy::AAuraEnemy()
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	// 복제 모드를 선택합니다.
-// - Minimal(Multiplayer, AI-Controlled)	: Gameplay Effect는 복제 X, Gameplay Cue, Gameplay Tags는 모든 클라이언트에게 복제 O 
-// - Mixed(Multiplayer, Player-Controlled)	: Gameplay Effect는 복제 O(소유권이 있는 클라이언트), Gameplay Cue, Gameplay Tags는 모든 클라이언트에게 복제 O 
-// - Full(Singleplayer)						: Gameplay Effect는 모든 클라이언트에게 복제 O
+	// - Minimal(Multiplayer, AI-Controlled)	: Gameplay Effect는 복제 X, Gameplay Cue, Gameplay Tags는 모든 클라이언트에게 복제 O 
+	// - Mixed(Multiplayer, Player-Controlled)	: Gameplay Effect는 복제 O(소유권이 있는 클라이언트), Gameplay Cue, Gameplay Tags는 모든 클라이언트에게 복제 O 
+	// - Full(Singleplayer)						: Gameplay Effect는 모든 클라이언트에게 복제 O
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	// AttributeSet을 상속받은 UAuraAttributeSet을 생성합니다.
@@ -42,4 +42,13 @@ void AAuraEnemy::UnHighlightActor()
 	GetMesh()->SetRenderCustomDepth(false);
 	// 무기 메쉬의 Custom Depth를 비활성화합니다.
 	Weapon->SetRenderCustomDepth(false);
+}
+
+void AAuraEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// AbilitySystemComponent의 Owner, Avatar 액터를 설정합니다.
+	// * Enemy의 경우 둘이 동일합니다.
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
